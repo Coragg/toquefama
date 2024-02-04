@@ -18,19 +18,8 @@ fn generate_random_number() -> i8 {
     random_number
 }
 
-
-fn input_string(message: &str) -> String {
-    print!("{}", message);
-    io::stdout().flush().unwrap();
-    let mut string_variable: String = String::new();
-    io::stdin().read_line(&mut string_variable).expect("Failed to read line");
-    let new_variable: String = string_variable.trim().to_string();
-    new_variable
-}
-
-
 fn repeated_number(numbers: String) -> bool {
-    let mut chars_seen = vec![];
+    let mut chars_seen: Vec<char> = vec![];
     
     for characters in numbers.chars() {
         if chars_seen.contains(&characters){
@@ -46,16 +35,30 @@ fn create_random_string_number(large_string: i8) -> String {
     let mut save_numbers_in_string: String = String::new();
 
     for _ in 0..large_string {
-        let random: i8 = generate_random_number();
-        let mut compare: String = save_numbers_in_string.clone() + &random.to_string();
-        while repeated_number(compare.clone()) {
-            let random: i8 = generate_random_number();
+        let mut random: i8;
+        let mut compare: String;
+        loop {
+            random = generate_random_number();
             compare = save_numbers_in_string.clone() + &random.to_string();
+            if !repeated_number(compare.clone()) {
+                break;
+            }
         }
         save_numbers_in_string.push_str(&random.to_string());
     }
 
     save_numbers_in_string
+}
+
+
+
+fn input_string(message: &str) -> String {
+    print!("{}", message);
+    io::stdout().flush().unwrap();
+    let mut string_variable: String = String::new();
+    io::stdin().read_line(&mut string_variable).expect("Failed to read line");
+    let new_variable: String = string_variable.trim().to_string();
+    new_variable
 }
 
 
@@ -96,6 +99,6 @@ fn main() {
     let user_name: String = input_string("Enter your name: ");   
     println!("{} welcome to the game: Toque Fama!!!", user_name);
     info_game();
-    println!("I wanna see a random number: {}", create_random_string_number(5));
+    println!("I wanna see a random number: {}", create_random_string_number(7));
     menu(user_name);
 }
