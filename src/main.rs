@@ -8,13 +8,12 @@ struct Famas {
     fama: u8
 }
 
-// creation of the opstion for copy and clone a struct
+// creation of the opstion for copy and clone a struct #[derive(Copy, Clone)]
 struct DataParty{
     win: u8,
     lose: u8,
     parties: u8,
-    best_party: u8,
-    bad_party: u8
+    best_party: i8
 }
 
 fn info_game() -> () {
@@ -31,9 +30,12 @@ fn info_game() -> () {
 
 fn show_stadistics(parties: DataParty) -> () {
     if parties.parties <= 1{
-        println!("You have played {} game", parties.parties);
+        println!("\nYou have played {} game", parties.parties);
     } else {
-        println!("You have played {} games", parties.parties);        
+        println!("\nYou have played {} games ", parties.parties); 
+        println!("You won {} games", parties.win);  
+        println!("You have lost {} games", parties.lose);
+        println!("And your best party was with {} tries", parties.best_party);
     }
 }
 
@@ -133,7 +135,7 @@ fn check_user_response(random_numbers: String, user_answer: String, quantity: i8
 }
 
 
-fn generation_of_turns_in_the_game(games: i8, random_numbers: String, quantity: i8) -> i8 { 
+fn generation_of_turns_in_the_game(games: i8, random_numbers: String, quantity: i8) -> (i8, i8) { 
     let mut party: i8 = 0;
     let mut win_or_lose: i8 = 0;
     loop {
@@ -151,11 +153,11 @@ fn generation_of_turns_in_the_game(games: i8, random_numbers: String, quantity: 
             break;
         }
     }
-    win_or_lose
+    (win_or_lose, party)
 }
 
 
-fn game() -> () {
+fn game() -> (i8, i8) {
     let mut quantity_numbers: i8 = input_i8("\nHow many digits you want to play (3 to 9)? ");
     
     loop {
@@ -176,18 +178,27 @@ fn game() -> () {
         how_many_games = input_i8("How many games do you want to play (2 to 30)? ");
     }
     println!("This is the random number: {}", random_number_for_user);
-    generation_of_turns_in_the_game(how_many_games, random_number_for_user, quantity_numbers);
+    let get_resul_party: (i8, i8) = generation_of_turns_in_the_game(how_many_games, random_number_for_user, quantity_numbers);
+    get_resul_party
 }
 
 
 fn menu(user_name: String) -> () {
-    let mut games_play: DataParty = DataParty{win: 0, lose: 0, parties: 0, best_party: 100, bad_party: 0};
+    let mut games_play: DataParty = DataParty{win: 0, lose: 0, parties: 0, best_party: 30};
     
     loop {
         let choose_play: String = input_string("Do you want to play? y/n: ");
         if choose_play.to_lowercase() == "y" || choose_play.to_lowercase() == "yes" {
-            println!("Wiii, we're going to play right now, good luck");
-            game();
+            let start_game: (i8, i8) = game();
+            if start_game.0 == -1 {
+                games_play.lose += 1;
+            } else if start_game.0 == 1{
+                games_play.win += 1;
+            }
+            
+            if games_play.best_party > start_game.1 {
+                games_play.best_party = start_game.1;
+            }        
             games_play.parties += 1;
         } else if choose_play.to_lowercase() == "n" || choose_play.to_lowercase() == "no" {
             show_stadistics(games_play);
@@ -198,7 +209,6 @@ fn menu(user_name: String) -> () {
         } 
     }
 }
-
 
 
 fn main() {
