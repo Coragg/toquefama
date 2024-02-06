@@ -35,7 +35,7 @@ fn show_stadistics(parties: DataParty) -> () {
         println!("\nYou have played {} games ", parties.parties); 
         println!("You won {} games", parties.win);  
         println!("You have lost {} games", parties.lose);
-        println!("And your best party was with {} tries", parties.best_party);
+        println!("And your best party was with {} try", parties.best_party);
     }
 }
 
@@ -146,6 +146,7 @@ fn generation_of_turns_in_the_game(games: i8, random_numbers: String, quantity: 
         
         if games == party || result_party == -1{
             win_or_lose -= 1;
+             println!("This is the random number: {}", random_numbers.clone());
             break;
         } else if result_party == 1 {
             println!("Excelent, you won");
@@ -177,7 +178,6 @@ fn game() -> (i8, i8) {
         println!("\nPlease, enter a valid value");
         how_many_games = input_i8("How many games do you want to play (2 to 30)? ");
     }
-    println!("This is the random number: {}", random_number_for_user);
     let get_resul_party: (i8, i8) = generation_of_turns_in_the_game(how_many_games, random_number_for_user, quantity_numbers);
     get_resul_party
 }
@@ -194,11 +194,11 @@ fn menu(user_name: String) -> () {
                 games_play.lose += 1;
             } else if start_game.0 == 1{
                 games_play.win += 1;
+                if games_play.best_party > start_game.1 {
+                    games_play.best_party = start_game.1;
+                }        
             }
             
-            if games_play.best_party > start_game.1 {
-                games_play.best_party = start_game.1;
-            }        
             games_play.parties += 1;
         } else if choose_play.to_lowercase() == "n" || choose_play.to_lowercase() == "no" {
             show_stadistics(games_play);
