@@ -158,7 +158,7 @@ fn generation_of_turns_in_the_game(games: i8, random_numbers: String, quantity: 
 }
 
 
-fn check_the_number(message_to_user: &str, message_in_case_of_error: &str, first_conditional: i8, second_conditional: i8) -> (i8){
+fn check_the_number(message_to_user: &str, message_in_case_of_error: &str, first_conditional: i8, second_conditional: i8) -> i8{
     let mut ask_number:i8 = input_i8(message_to_user);
     loop {
         if ask_number >= first_conditional && ask_number <= second_conditional {
