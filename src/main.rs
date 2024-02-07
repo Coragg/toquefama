@@ -158,26 +158,27 @@ fn generation_of_turns_in_the_game(games: i8, random_numbers: String, quantity: 
 }
 
 
-fn game() -> (i8, i8) {
-    let mut quantity_numbers: i8 = input_i8("\nHow many digits you want to play (3 to 9)? ");
-    
+fn check_the_number(message_to_user: &str, message_in_case_of_error: &str, first_conditional: i8, second_conditional: i8) -> (i8){
+    let mut ask_number:i8 = input_i8(message_to_user);
     loop {
-        if quantity_numbers >= 3 && quantity_numbers <= 9 {
+        if ask_number >= first_conditional && ask_number <= second_conditional {
             break;
         }
         println!("\nPlease, enter a valid value");
-        quantity_numbers = input_i8("Enter again, how many digits do you want to play(3 to 9)? ");  
+        ask_number = input_i8(message_in_case_of_error);  
     }
+
+    ask_number
+}
+
+
+fn game() -> (i8, i8) {
+    let quantity_numbers: i8 = check_the_number("\nHow many digits you want to play (3 to 9)? ", "Enter again, how many digits do you want to play(3 to 9)? ", 3, 9);
+
     let random_number_for_user: String = create_random_string_number(quantity_numbers);
     
-    let mut how_many_games: i8 = input_i8("How many games do you want to play (2 to 30)? ");
-    loop {
-         if how_many_games >= 2 && quantity_numbers <= 30 {
-            break;
-        }
-        println!("\nPlease, enter a valid value");
-        how_many_games = input_i8("How many games do you want to play (2 to 30)? ");
-    }
+    let how_many_games: i8 = check_the_number("How many games do you want to play(2 to 30)? ", "How many games do you want to play (2 to 30)? ", 2, 30); 
+
     let get_resul_party: (i8, i8) = generation_of_turns_in_the_game(how_many_games, random_number_for_user, quantity_numbers);
     get_resul_party
 }
