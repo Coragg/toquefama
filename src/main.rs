@@ -1,7 +1,7 @@
 use rand::Rng;
 use std::process;   
-use std::io::{self, Write};
-
+mod input_modules;
+use input_modules::{input_i8, input_string};
 
 struct Famas {
     toque: u8,
@@ -76,31 +76,6 @@ fn create_random_string_number(large_string: i8) -> String {
     }
 
     save_numbers_in_string
-}
-
-
-fn input_string(message: &str) -> String {
-    print!("{}", message);
-    io::stdout().flush().unwrap();
-    let mut string_variable: String = String::new();
-    io::stdin().read_line(&mut string_variable).expect("Failed to read line");
-    let new_variable: String = string_variable.trim().to_string();
-    new_variable
-}
-
-
-fn input_i8(message: &str) -> i8 {
-    print!("{}", message);
-    io::stdout().flush().unwrap();
-    let mut variable: String = String::new();
-    io::stdin().read_line(&mut variable).expect("Something is wrong");
-    match variable.trim().parse::<i8>() {
-        Ok(num) => num,
-        Err(_) => {
-            println!("Please, enter a valid term.");
-            input_i8(message)
-        },
-    }
 }
 
 
@@ -203,7 +178,7 @@ fn menu(user_name: String) -> () {
             games_play.parties += 1;
         } else if choose_play.to_lowercase() == "n" || choose_play.to_lowercase() == "no" {
             show_stadistics(games_play);
-            println!("Good bye {}, see you later", user_name);
+            println!("Good bye {}, it was a placer play with you", user_name);
             process::exit(0);
         } else {
             println!("Please, you only have to write yes or no.")
