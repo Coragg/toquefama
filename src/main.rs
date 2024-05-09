@@ -69,7 +69,7 @@ fn repeated_number(numbers: String) -> bool {
 
 
 fn create_random_string_number(large_string: i8) -> String {
-
+    // give the large of the string and generate radoms numbers in that space
     let mut save_numbers_in_string: String = String::new();
 
     for _ in 0..large_string {
@@ -90,6 +90,7 @@ fn create_random_string_number(large_string: i8) -> String {
 
 
 fn count_toque_fama(random_numbers: String, user_answer: String) -> Famas {
+    // analyze the string and give us the answer of how many toques and fama give the turn
     let mut toques_famas: Famas = Famas{toque: 0, fama: 0};
     for (index, num) in user_answer.chars().enumerate(){
         if Some(num) == random_numbers.chars().nth(index) {
@@ -103,7 +104,7 @@ fn count_toque_fama(random_numbers: String, user_answer: String) -> Famas {
 
 
 fn check_user_response(random_numbers: String, user_answer: String, quantity: i8) -> i8{
-    // as usize is for the conflicts of types.
+    //veryfication if the user write bad the instrucction in the party    
     if user_answer.len() != quantity as usize {
         println!("Your entry does not meet the number of allowed characters, which were {} and you entered {}, so you lose.", quantity, user_answer.len());
         return -1;
@@ -121,6 +122,7 @@ fn check_user_response(random_numbers: String, user_answer: String, quantity: i8
 
 
 fn generation_of_turns_in_the_game(games: i8, random_numbers: String, quantity: i8) -> (i8, i8) { 
+    
     let mut party: i8 = 0;
     let mut win_or_lose: i8 = 0;
     loop {
