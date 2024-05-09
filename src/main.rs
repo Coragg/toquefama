@@ -3,12 +3,13 @@ use std::process;
 mod input_modules;
 use input_modules::{input_i8, input_string};
 
+// struct for capture data of the state of the party
 struct Famas {
     toque: u8,
     fama: u8
 }
 
-// creation of the opstion for copy and clone a struct #[derive(Copy, Clone)]
+// save all of the information of the parties in game
 struct DataParty{
     win: u8,
     lose: u8,
@@ -17,6 +18,7 @@ struct DataParty{
 }
 
 fn info_game() -> () {
+    // Show with a print all of the instrucction we must follow in the game
     println!("========================================================================================================");
     println!("The objective of the game is to randomly generate 3 to 8 numbers");
     println!("from zero to nine, your duty is to find them with the following clues");
@@ -29,7 +31,8 @@ fn info_game() -> () {
 
 
 fn show_stadistics(parties: DataParty) -> () {
-    if parties.parties <= 1{
+    // change the way how we see the stadistic if we play one party or more
+    if parties.parties <= 1 {
         println!("\nYou have played {} game", parties.parties);
     } else {
         println!("\nYou have played {} games ", parties.parties); 
@@ -41,12 +44,18 @@ fn show_stadistics(parties: DataParty) -> () {
 
 
 fn generate_random_number() -> i8 {
+    // return a number between 0 or 9
     let random_number:i8 = rand::thread_rng().gen_range(0..=9);
     random_number
 }
 
 
 fn repeated_number(numbers: String) -> bool {
+    /* for analizy a string with numbers, and verification if one number are repeat or not
+    param numbers, it is a string of numbers
+    false if no number found
+    true if it finds a number
+     */
     let mut chars_seen: Vec<char> = vec![];
     
     for characters in numbers.chars() {
@@ -60,6 +69,7 @@ fn repeated_number(numbers: String) -> bool {
 
 
 fn create_random_string_number(large_string: i8) -> String {
+
     let mut save_numbers_in_string: String = String::new();
 
     for _ in 0..large_string {
