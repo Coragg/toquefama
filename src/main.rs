@@ -20,7 +20,7 @@ struct DataParty {
 fn info_game() -> () {
     // Show with a print all of the instrucction we must follow in the game
     println!("========================================================================================================");
-    println!("The objective of the game is to randomly generate 3 to 8 numbers");
+    println!("The objective of the game is to randomly generate 3 to 9 numbers");
     println!("from zero to nine, your duty is to find them with the following clues");
     println!("if you have 1 touch you found 1 number but not in the right place");
     println!("if you found 1 fame you found 1 number and in the right place");
